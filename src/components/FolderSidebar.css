@@ -1,0 +1,12 @@
+.folder {
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.folder:first-child {
+  border-top: 1px solid black;
+}
+
+.activeFolder a {
+  background-color: blue;
+}
