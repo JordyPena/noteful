@@ -7,15 +7,73 @@ import Note from "./components/Note";
 import FolderSidebar from "./components/FolderSidebar";
 import store from "./store";
 import NoteList from "./components/NoteList";
+import NotefulContext from "./NotefulContext";
+
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      folders: store.folders,
-      notes: store.notes,
+      folders: [],
+      notes: [],
     };
+  }
+  componentDidMount() {
+    fetch("http://localhost:9090/folders")
+    .then(response => {
+      if (!response.ok)
+        return response.json().then(e => Promise.reject(e));
+
+      return response.json()
+    })
+    .then(data => {
+      this.setState({
+        folders: data
+      })
+    })
+    .catch(error => {
+      console.error({error})
+    })
+////////////////////////
+    fetch("http://localhost:9090/notes")
+    .then(response => {
+      if (!response.ok)
+        return response.json().then(e => Promise.reject(e));
+
+      return response.json()
+    })
+    .then(data => {
+      this.setState({
+        notes: data
+      })
+    })
+    .catch(error => {
+      console.error({error})
+    })
+
+  }
+
+  handleDelete = (id) => {
+    fetch(`http://localhost:9090/notes/${id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json"
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        const newNotes = this.state.notes.filter((note, idx) => {
+          return id !== note.id  
+        })
+        this.setState({
+          notes: newNotes
+        })
+      }
+    })
+
+    
+    
   }
 
   renderNotes = () => {
@@ -25,7 +83,7 @@ class App extends Component {
           path="/"
           exact
           render={(props) => {
-            return <NoteList notes={this.state.notes} routerProps={props}/>;
+            return <NoteList delete={this.handleDelete} notes={this.state.notes} routerProps={props}/>;
           }}
         />
 
@@ -35,7 +93,7 @@ class App extends Component {
             const note = this.state.notes.find((note) => 
               note.id === props.match.params.noteid
             ) 
-            return <Note note={note} {...props}/>;
+            return <Note delete={this.handleDelete} note={note} {...props}/>;
           }}
         />
 
@@ -54,8 +112,12 @@ class App extends Component {
     );
   };
   render() {
+    const contextValue = {
+      folders: this.state.folders,
+      notes: this.state.notes
+    }
     return (
-      <>
+      <NotefulContext.Provider value={contextValue}>
         <header className="header">
           <Link to="/">
             <h1>Noteful</h1>
@@ -100,7 +162,8 @@ class App extends Component {
             {this.renderNotes()}
           </section>
         </main>
-      </>
+      </NotefulContext.Provider>
+      
     );
   }
 }

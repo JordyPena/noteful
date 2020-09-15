@@ -1,26 +1,38 @@
-import React from 'react'
-import { Router, Link } from "react-router-dom"
-import "./FolderSidebar.css"
+import React from "react";
+import { Router, Link } from "react-router-dom";
+import "./FolderSidebar.css";
+import NotefulContext from "../NotefulContext";
 
 function FolderSidebar(props) {
-  console.log(props)
-
-  
+  console.log(props);
   return (
-    <>
-      <section className="sidebar">
-        <ul>
-          
-          {props.folders.map((item, idx) => {
-          return <li key={idx} className={`folder  ${item.id === props.match.params.folderid ? "activeFolder" : ""}`}><Link to={`/folder/${item.id}`}>{item.name}</Link></li>
-        })} 
-          
-        
-        </ul>
-       
-      </section>
-    </>
-  )
+    <NotefulContext.Consumer>
+      {(context) => {
+        return (
+          <>
+            <section className="sidebar">
+              <ul>
+                {context.folders.map((item, idx) => {
+                  return (
+                    <li
+                      key={idx}
+                      className={`folder  ${
+                        item.id === props.match.params.folderid
+                          ? "activeFolder"
+                          : ""
+                      }`}
+                    >
+                      <Link to={`/folder/${item.id}`}>{item.name}</Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          </>
+        );
+      }}
+    </NotefulContext.Consumer>
+  );
 }
 
-export default FolderSidebar
+export default FolderSidebar;

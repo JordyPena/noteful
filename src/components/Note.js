@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import NotefulContext from "../NotefulContext";
 
 function Note(props) {
   console.log(props);
+
   return (
     <>
       <div className="note">
@@ -11,11 +13,16 @@ function Note(props) {
         </Link>
         <div>
           <p>Data modified on 1/1/2020</p>
-          <button className="delete-note">Delete Note</button>
+
+          <button
+            onClick={() => props.delete(props.note.id)}
+            className="delete-note"
+          >
+            Delete Note
+          </button>
         </div>
       </div>
-        {props.match.params.noteid && <p>{props.note.content}</p>} 
-
+      {props.match.params.noteid && <p>{props.note.content}</p>}
     </>
   );
 }
