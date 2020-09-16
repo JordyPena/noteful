@@ -90,9 +90,11 @@ class App extends Component {
         <Route
           path="/note/:noteid"
           render={(props) => {
+         
             const note = this.state.notes.find((note) => 
               note.id === props.match.params.noteid
             ) 
+            if ( note )
             return <Note delete={this.handleDelete} note={note} {...props}/>;
           }}
         />
@@ -137,13 +139,19 @@ class App extends Component {
               <Route
                 path="/note/:noteid"
                 render={(props) => {
-                  const note = this.state.notes.find(
-                    (note) => note.id === props.match.params.noteid
-                  );
-                  const folder = this.state.folders.find(
-                    (folder) => folder.id === note.folderId
-                  );
-                  return <NoteSidebar {...props} folderName={folder.name} />;
+                  if ( this.state.notes.length ) {
+                    const note = this.state.notes.find(
+                      (note) => note.id === props.match.params.noteid
+                    ); 
+                    
+                    const folder = this.state.folders.find(
+                      (folder) => folder.id === note.folderId
+                    );
+
+                    return <NoteSidebar {...props} folderName={folder.name} />;
+                  }
+                 
+                 
                 }}
               />
 

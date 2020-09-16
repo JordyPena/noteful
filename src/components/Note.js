@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import NotefulContext from "../NotefulContext";
+
 
 function Note(props) {
   console.log(props);
-
+  
   return (
     <>
       <div className="note">
@@ -13,10 +13,14 @@ function Note(props) {
         </Link>
         <div>
           <p>Data modified on 1/1/2020</p>
-
+          {/* need to add link to go to local */}
           <button
-            onClick={() => props.delete(props.note.id)}
+            onClick={() => {
+             props.delete(props.note.id)
+              if ( props.match.params.noteid )  props.history.push("/")
+            }}
             className="delete-note"
+            
           >
             Delete Note
           </button>
