@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"
 
 
 function Note(props) {
@@ -13,7 +14,7 @@ function Note(props) {
         </Link>
         <div>
           <p>Data modified on 1/1/2020</p>
-          {/* need to add link to go to local */}
+         
           <button
             onClick={() => {
              props.delete(props.note.id)
@@ -30,5 +31,9 @@ function Note(props) {
     </>
   );
 }
+
+Note.propTypes = {
+  note: PropTypes.object
+};
 
 export default Note;

@@ -2,6 +2,7 @@ import React from "react";
 import { Router, Link } from "react-router-dom";
 import "./FolderSidebar.css";
 import NotefulContext from "../NotefulContext";
+import PropTypes from "prop-types"
 
 function FolderSidebar(props) {
   console.log(props);
@@ -34,5 +35,9 @@ function FolderSidebar(props) {
     </NotefulContext.Consumer>
   );
 }
+
+FolderSidebar.propTypes = {
+  folders: PropTypes.array
+};
 
 export default FolderSidebar;

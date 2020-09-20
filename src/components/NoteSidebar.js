@@ -1,5 +1,6 @@
 import React from "react";
 import { Router, Link } from "react-router-dom";
+import PropTypes from "prop-types"
 
 function NoteSidebar(props) {
   console.log(props, "text");
@@ -19,5 +20,9 @@ function NoteSidebar(props) {
     // Create a link in that link i need previous url with history.location.pathName
   );
 }
+
+NoteSidebar.propTypes = {
+  folderName: PropTypes.string
+};
 
 export default NoteSidebar;

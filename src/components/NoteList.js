@@ -1,21 +1,33 @@
 import React from "react";
 import Note from "./Note";
 import NotefulContext from "../NotefulContext";
+import ErrorBoundary from "./ErrorBoundary"
+import PropTypes from "prop-types"
 
 function NoteList(props) {
   
-  return <NotefulContext.Consumer>
+  return (
+    <ErrorBoundary>
+  <NotefulContext.Consumer>
     {(context) => {
       return (
         <>
         
-          {context.notes.map((note, idx) => {
+          {props.notes.map((note, idx) => {
             return <Note delete={props.delete} key={idx} note={note} {...props.routerProps} />;
           })}
         </>
       );
     }}
-  </NotefulContext.Consumer>;
+  </NotefulContext.Consumer>
+  </ErrorBoundary>
+  )
+  
+}
+
+NoteList.propTypes = {
+  notes: PropTypes.array,
+  routerProps: PropTypes.object
 }
 
 export default NoteList;
