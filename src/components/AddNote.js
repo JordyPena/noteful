@@ -40,12 +40,19 @@ class AddNote extends Component {
     }
   }
 
-  handleChange(event) {
-    const {name, folder} = this.state;
-  }
+ 
 
-  handleSubmit(event) {
-    if (!this.state.nameError) {
+  handleSubmit = (event) => {
+    event.preventDefault()
+    if (this.state.name.value === "")
+    {this.setState({
+      name: {
+        value: "",
+        touched: true
+      },
+      nameError: this.validateName("")
+    })}
+    else if (!this.state.nameError) {
       this.props.addNote(event)
     }
     
@@ -53,12 +60,15 @@ class AddNote extends Component {
   
 
   render() {
-    
+    console.log(this.state)
     return (
       <>
       <button onClick={this.props.history.goBack}>Back</button>
 
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={() => {
+        this.handleSubmit()
+        this.props.history.push("/")
+      }}>
         <h2>Create a note</h2>
         <label>
           Name
@@ -85,8 +95,8 @@ class AddNote extends Component {
         <label>
           Folder
           <select name="folderSelected">
-            {this.props.folders.map((folder) => {
-               return <option value={folder.id}>{folder.name}</option>
+            {this.props.folders.map((folder, idx) => {
+               return <option key={idx} value={folder.id}>{folder.name}</option>
             })}
         
           </select>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./FolderSidebar.css";
 import NotefulContext from "../NotefulContext";
 import PropTypes from "prop-types"

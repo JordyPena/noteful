@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
-
 import NoteSidebar from "./components/NoteSidebar";
 import "./App.css";
 import Note from "./components/Note";
 import FolderSidebar from "./components/FolderSidebar";
-import store from "./store";
 import NoteList from "./components/NoteList";
 import NotefulContext from "./NotefulContext";
 import AddFolder from "./components/AddFolder";
@@ -99,6 +97,7 @@ class App extends Component {
             folders: prevState.folders
           }
         })
+        this.props.history.push(`/folder/${data.id}`)
       })
       .catch((err) => {
         this.setState({
@@ -117,7 +116,7 @@ class App extends Component {
       content: event.currentTarget["contentInput"].value,
       folderId: folderOptions.options[folderOptions.selectedIndex].value
     }
-    const newNotes = this.state 
+    
     const url = `http://localhost:9090/notes`;
    
     const options = {

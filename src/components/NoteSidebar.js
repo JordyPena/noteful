@@ -1,5 +1,4 @@
 import React from "react";
-import { Router, Link } from "react-router-dom";
 import PropTypes from "prop-types"
 
 function NoteSidebar(props) {
