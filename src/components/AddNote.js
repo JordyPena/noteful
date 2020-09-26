@@ -11,7 +11,7 @@ class AddNote extends Component {
         value: "",
         touched: false
       },
-      nameError: ""
+      nameError: false
     
     }
   }
@@ -42,16 +42,17 @@ class AddNote extends Component {
 
  
 
-  handleSubmit = (event) => {
+  handleSubmit = (event) => { 
     event.preventDefault()
-    if (this.state.name.value === "")
-    {this.setState({
+    console.log(event)
+    if (this.state.name.value === "") {
+      this.setState({
       name: {
         value: "",
         touched: true
       },
-      nameError: this.validateName("")
-    })}
+      nameError: "Name is required"
+    })} 
     else if (!this.state.nameError) {
       this.props.addNote(event)
     }
@@ -65,9 +66,11 @@ class AddNote extends Component {
       <>
       <button onClick={this.props.history.goBack}>Back</button>
 
-      <form onSubmit={() => {
-        this.handleSubmit()
-        this.props.history.push("/")
+      <form onSubmit={(event) => {
+        this.handleSubmit(event)
+        if (this.state.name.value) {
+          this.props.history.push("/")
+        }
       }}>
         <h2>Create a note</h2>
         <label>
@@ -103,7 +106,7 @@ class AddNote extends Component {
         </label>
         <br/>
         
-        <button type="submit" disabled={this.state.nameError}>Add note</button>
+        <button type="submit">Add note</button>
       </form>
 
       
@@ -112,7 +115,7 @@ class AddNote extends Component {
   }
 }
 AddNote.propTypes = {
-  folders: PropTypes.array
+  folders: PropTypes.array.isRequired
 };
 
 export default AddNote

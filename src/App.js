@@ -97,7 +97,7 @@ class App extends Component {
             folders: prevState.folders
           }
         })
-        this.props.history.push(`/folder/${data.id}`)
+        
       })
       .catch((err) => {
         this.setState({

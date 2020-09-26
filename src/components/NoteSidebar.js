@@ -21,7 +21,7 @@ function NoteSidebar(props) {
 }
 
 NoteSidebar.propTypes = {
-  folderName: PropTypes.string
+  folderName: PropTypes.string.isRequired
 };
 
 export default NoteSidebar;

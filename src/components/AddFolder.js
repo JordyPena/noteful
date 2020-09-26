@@ -37,7 +37,7 @@ console.log(props)
 }
 
 AddFolder.propTypes = {
-  folders: PropTypes.array
+  folders: PropTypes.array.isRequired
 };
 
 export default AddFolder

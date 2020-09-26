@@ -26,8 +26,8 @@ function NoteList(props) {
 }
 
 NoteList.propTypes = {
-  notes: PropTypes.array,
-  routerProps: PropTypes.object
+  notes: PropTypes.array.isRequired,
+  routerProps: PropTypes.object.isRequired
 }
 
 export default NoteList;
