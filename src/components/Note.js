@@ -34,7 +34,7 @@ function Note(props) {
 
 Note.propTypes = {
   note: PropTypes.object.isRequired,
-  delete: PropTypes.function.isRequired
+  
 };
 
 export default Note;
