@@ -185,7 +185,7 @@ class App extends Component {
             const newArr = this.state.notes.filter((note) => {
               return note.folderId === props.match.params.folderid;
             });
-            return <NoteList notes={newArr} routerProps={props} />;
+            return <NoteList delete={this.handleDelete} notes={newArr} routerProps={props} />;
           }}
         />
 

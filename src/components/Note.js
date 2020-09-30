@@ -14,7 +14,7 @@ function Note(props) {
         </Link>
         <div>
           <p>Data modified on 1/1/2020</p>
-         
+        
           <button
             onClick={() => {
              props.delete(props.note.id)
@@ -33,7 +33,8 @@ function Note(props) {
 }
 
 Note.propTypes = {
-  note: PropTypes.object.isRequired
+  note: PropTypes.object.isRequired,
+  delete: PropTypes.function.isRequired
 };
 
 export default Note;
