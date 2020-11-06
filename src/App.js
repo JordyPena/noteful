@@ -8,9 +8,9 @@ import NoteList from "./components/NoteList";
 import NotefulContext from "./NotefulContext";
 import AddFolder from "./components/AddFolder";
 import AddNote from "./components/AddNote";
-const URL = process.env.NODE_ENV === "production" 
-  ? process.env.REACT_APP_PROD_URL 
-  : "http://localhost:8000"
+ const URL = process.env.NODE_ENV === "production" 
+   ? process.env.REACT_APP_PROD_URL 
+   : "http://localhost:8000"
   
 
 class App extends Component {
@@ -103,10 +103,11 @@ class App extends Component {
     };
     fetch(url, options)
       .then((response) => {
-        console.log(response)
+        
         if (!response.ok) {
           throw new Error("Something went wrong, please try again later");
-        }
+        } 
+        
         return response.json();
       })
       .then((data) => {
@@ -152,11 +153,11 @@ class App extends Component {
        
         if (!response.ok) {
           throw new Error("Something went wrong, please try again later");
-        }
+        } 
         return response.json();
       })
       .then((data) => {
-      
+        console.log(data)
         this.setState((prevState) => {
           prevState.notes.push(data) 
           return {
@@ -180,11 +181,14 @@ class App extends Component {
           exact
           render={(props) => {
             return (
+              
               <NoteList
                 delete={this.handleDelete}
                 notes={this.state.notes}
                 routerProps={props}
               />
+        
+              
             );
           }}
         />
