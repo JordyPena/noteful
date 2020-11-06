@@ -8,6 +8,10 @@ import NoteList from "./components/NoteList";
 import NotefulContext from "./NotefulContext";
 import AddFolder from "./components/AddFolder";
 import AddNote from "./components/AddNote";
+const URL = process.env.NODE_ENV === "production" 
+  ? process.env.REACT_APP_PROD_URL 
+  : "http://localhost:8000"
+  
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +26,7 @@ class App extends Component {
 
   //////////////get request/////////
   componentDidMount() {
-    fetch("http://localhost:8000/api/folders", {
+    fetch(`${URL}/api/folders`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +47,7 @@ class App extends Component {
         console.error({ error });
       });
    
-    fetch("http://localhost:8000/api/notes", {
+    fetch(`${URL}/api/notes`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +70,7 @@ class App extends Component {
   }
 ///////////////deleting note/////////////////////////
   handleDelete = (id) => {
-    fetch(`http://localhost:8000/api/notes/${id}`, {
+    fetch(`${URL}/api/notes/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -87,7 +91,7 @@ class App extends Component {
   addFolder = (event) => {
     event.preventDefault()
     const folder = { name: event.currentTarget["folderName"].value }
-    const url = `http://localhost:8000/api/folders`;
+    const url = `${URL}/api/folders`;
    
     const options = {
       method: "POST",
@@ -133,7 +137,7 @@ class App extends Component {
       folder_id: folderOptions.options[folderOptions.selectedIndex].value
     }
     
-    const url = `http://localhost:8000/api/notes`;
+    const url = `${URL}/api/notes`;
    
     const options = {
       method: "POST",
