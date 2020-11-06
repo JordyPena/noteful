@@ -18,7 +18,7 @@ function FolderSidebar(props) {
                     <li
                       key={idx}
                       className={`folder  ${
-                        item.id === props.match.params.folderid
+                        item.id === +props.match.params.folderid
                           ? "activeFolder"
                           : ""
                       }`}

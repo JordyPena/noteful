@@ -193,7 +193,7 @@ class App extends Component {
           path="/note/:noteid"
           render={(props) => {
             const note = this.state.notes.find(
-              (note) => note.id === props.match.params.noteid
+              (note) => note.id === +props.match.params.noteid
             );
             if (note)
               return <Note delete={this.handleDelete} note={note} {...props} />;
