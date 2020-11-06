@@ -252,7 +252,7 @@ class App extends Component {
                 render={(props) => {
                   if (this.state.notes.length) {
                     const note = this.state.notes.find(
-                      (note) => note.id === props.match.params.noteid
+                      (note) => note.id === +props.match.params.noteid
                     );
 
                     const folder = this.state.folders.find(
