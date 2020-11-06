@@ -18,9 +18,17 @@ class App extends Component {
       notes: [],
     };
   }
+
+
   //////////////get request/////////
   componentDidMount() {
-    fetch("http://localhost:9090/folders")
+    fetch("http://localhost:8000/api/folders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.REACT_APP_TOKEN
+      }
+    })
       .then((response) => {
         if (!response.ok) return response.json().then((e) => Promise.reject(e));
 
@@ -35,7 +43,13 @@ class App extends Component {
         console.error({ error });
       });
    
-    fetch("http://localhost:9090/notes")
+    fetch("http://localhost:8000/api/notes", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: process.env.REACT_APP_TOKEN
+      }
+    })
       .then((response) => {
         if (!response.ok) return response.json().then((e) => Promise.reject(e));
 
@@ -52,10 +66,11 @@ class App extends Component {
   }
 ///////////////deleting note/////////////////////////
   handleDelete = (id) => {
-    fetch(`http://localhost:9090/notes/${id}`, {
+    fetch(`http://localhost:8000/api/notes/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
+        Authorization: process.env.REACT_APP_TOKEN
       },
     }).then((response) => {
       if (response.ok) {
@@ -72,13 +87,14 @@ class App extends Component {
   addFolder = (event) => {
     event.preventDefault()
     const folder = { name: event.currentTarget["folderName"].value }
-    const url = `http://localhost:9090/folders`;
+    const url = `http://localhost:8000/api/folders`;
    
     const options = {
       method: "POST",
       body: JSON.stringify(folder),
       headers: {
         "content-type": "application/json",
+        Authorization: process.env.REACT_APP_TOKEN
       },
     };
     fetch(url, options)
@@ -114,16 +130,17 @@ class App extends Component {
     const note = { 
       name: event.currentTarget["noteName"].value,
       content: event.currentTarget["contentInput"].value,
-      folderId: folderOptions.options[folderOptions.selectedIndex].value
+      folder_id: folderOptions.options[folderOptions.selectedIndex].value
     }
     
-    const url = `http://localhost:9090/notes`;
+    const url = `http://localhost:8000/api/notes`;
    
     const options = {
       method: "POST",
       body: JSON.stringify(note),
       headers: {
         "content-type": "application/json",
+        Authorization: process.env.REACT_APP_TOKEN
       },
     };
     fetch(url, options)
@@ -183,8 +200,9 @@ class App extends Component {
           path="/folder/:folderid"
           render={(props) => {
             const newArr = this.state.notes.filter((note) => {
-              return note.folderId === props.match.params.folderid;
-            });
+              console.log(note)
+              return note.folder_id === +props.match.params.folderid;
+            }); console.log(newArr)
             return <NoteList delete={this.handleDelete} notes={newArr} routerProps={props} />;
           }}
         />
@@ -234,7 +252,7 @@ class App extends Component {
                     );
 
                     const folder = this.state.folders.find(
-                      (folder) => folder.id === note.folderId
+                      (folder) => folder.id === note.folder_id
                     );
 
                     return <NoteSidebar {...props} folderName={folder.name} />;
